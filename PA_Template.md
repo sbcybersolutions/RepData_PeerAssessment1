@@ -9,3 +9,21 @@ There are 5 primary questions to be answered, dealing with processing and analys
 The device used in this particular data set collects data on the number of steps taken by an individual, in 5 minute intervals. 
 Two months of data, October/November 2012 are included within the data set. 
 The variables measured include steps (the number of steps taken), date (the day on which the steps measurement was taken) and interval, (the interval in which the steps measurement was taken.) The data is stored in csv format, with 17,598 observations and the aforementioned 3 variables recorded.
+
+## Question 1: Loading and Preprocesing the data
+
+The data must be in the user's current working directory for the code to run correctly.
+<code>
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+
+# Load the data
+data <- read.csv("activity.csv")
+
+# Process/transform the data (convert date to Date type)
+data$date <- as.Date(data$date, format="%Y-%m-%d")
+
+# View the data
+head(data)
+</code>
