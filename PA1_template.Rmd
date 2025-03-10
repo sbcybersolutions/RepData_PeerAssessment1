@@ -1,0 +1,146 @@
+---
+title: 'Reproducible Research: Peer Assignment 1'
+author: "cws"
+date: "2025-03-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment
+
+This assignment will be described in multiple parts. You will need to write a report that answers the questions detailed below. Ultimately, you will need to complete the entire assignment in a single R markdown document that can be processed by knitr and be transformed into an HTML file.
+
+### Loading and Preprocessing the Data
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+
+# Load the data
+data <- read.csv("activity.csv")
+
+# Process/transform the data (convert date to Date type)
+data$date <- as.Date(data$date, format="%Y-%m-%d")
+
+# View the data
+head(data)
+```
+
+### Transform the Data into a suitable format
+```{r}
+activity_NONA <- na.omit(data)
+head(activity_NONA)
+```
+
+### What are the mean and median steps taken per day
+```{r}
+# Aggregate steps per day for visualization
+activity_per_day <- activity_NONA %>%
+  group_by(date) %>%
+  summarise(total_steps = sum(steps))
+
+head(activity_per_day)
+```
+
+### Plot a histogram of the total steps per day
+```{r}
+ggplot(activity_per_day, aes(x = total_steps)) +
+  geom_histogram(binwidth = 500, fill = 'steelblue3', color = 'black') +
+  ggtitle("Total Number of Steps Taken Each Day") +
+  xlab("Total Steps") +
+  ylab("Frequency")
+```
+
+### Summarize the statistics of total steps per day
+```{r}
+summary(activity_per_day)
+```
+
+### Aggregate average steps per interval for visualization
+```{r}
+activity_per_interval <- activity_NONA %>%
+  group_by(interval) %>%
+  summarise(mean_steps = mean(steps))
+```
+
+### Plot the time series of average steps per interval
+```{r}
+ggplot(activity_per_interval, aes(x = interval, y = mean_steps)) + 
+  geom_line(color = "blue") +
+  ggtitle("Average Number of Steps Taken per Interval") +
+  xlab("Interval") +
+  ylab("Average Steps")
+```
+
+### Find the interval with the maximum average steps
+```{r}
+max_interval <- activity_per_interval[which.max(activity_per_interval$mean_steps),]
+print(max_interval)
+```
+
+### Count the number of missing values in the data set
+```{r}
+missing_values <- colSums(is.na(data))
+print(missing_values)
+```
+
+### Impute missing values using the mean steps per interval
+```{r}
+activity_filled <- data %>%
+  left_join(activity_per_interval, by = "interval") %>%
+  mutate(steps = ifelse(is.na(steps), mean_steps, steps)) %>%
+  select(-mean_steps)  # Remove the extra column created by join
+
+head(activity_filled)
+```
+
+### Aggregate total steps per day after filling missing values
+```{r}
+activity_filled2 <- activity_filled %>%
+  group_by(date) %>%
+  summarise(total_steps = sum(steps))
+```
+
+### Plot histogram after imputing missing values
+```{r}
+ggplot(activity_filled2, aes(x = total_steps)) +
+  geom_histogram(binwidth = 500, fill = 'red', color = 'black') +
+  ggtitle("Total Number of Steps Taken Each Day - Missing Values Added") +
+  xlab("Total Steps") +
+  ylab("Frequency")
+```
+
+### Summary statistics after imputing missing values
+```{r}
+summary(activity_filled2)
+```
+
+### Categorize days as weekday or weekend
+```{r}
+activity_filled <- activity_filled %>%
+  mutate(weekdayType = ifelse(weekdays(date) %in% c("Saturday", "Sunday"), "weekend", "weekday"))
+```
+
+### Compute mean steps per interval for weekdays vs weekends
+```{r}
+activity_filled3 <- activity_filled %>%
+  group_by(interval, weekdayType) %>%
+  summarise(mean_steps = mean(steps), .groups = "drop")
+
+head(activity_filled3)
+```
+
+### Plot time series average steps by interval for weekdays and weekends
+```{r}
+ggplot(activity_filled3, aes(x = interval, y = mean_steps)) + 
+  geom_line(color = "darkgreen") +
+  facet_grid(rows = vars(weekdayType)) +
+  ggtitle("Average Steps per Interval - Weekday vs. Weekend") +
+  xlab("Interval") +
+  ylab("Average Steps")
+```
+
