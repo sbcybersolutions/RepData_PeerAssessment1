@@ -69,7 +69,7 @@ file.
       xlab("Total Steps") +
       ylab("Frequency")
 
-![First Histogram](/RepData_PeerAssessment1/blob/master/Fig1.png)
+![/RepData_PeerAssessment1/blob/master/Fig1.png](https://github.com/sbcybersolutions/RepData_PeerAssessment1/blob/master/Fig1.png)
 
 ### Summarize the statistics of total steps per day
 
