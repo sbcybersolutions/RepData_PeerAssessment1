@@ -69,7 +69,7 @@ file.
       xlab("Total Steps") +
       ylab("Frequency")
 
-![/RepData_PeerAssessment1/blob/master/Fig1.png](https://github.com/sbcybersolutions/RepData_PeerAssessment1/blob/master/Fig1.png)
+![First Histogram](https://github.com/sbcybersolutions/RepData_PeerAssessment1/blob/master/Fig1.png)
 
 ### Summarize the statistics of total steps per day
 
@@ -97,7 +97,7 @@ file.
       xlab("Interval") +
       ylab("Average Steps")
 
-![](PA1_template_files/figure-markdown_strict/unnamed-chunk-31-1.png)
+![Time Series Plot](https://github.com/sbcybersolutions/RepData_PeerAssessment1/blob/master/Fig2.png)
 
 ### Find the interval with the maximum average steps
 
@@ -148,7 +148,7 @@ file.
       xlab("Total Steps") +
       ylab("Frequency")
 
-![](PA1_template_files/figure-markdown_strict/unnamed-chunk-36-1.png)
+![Missing Values Histogram](https://github.com/sbcybersolutions/RepData_PeerAssessment1/blob/master/Fig3.png)
 
 ### Summary statistics after imputing missing values
 
@@ -194,4 +194,4 @@ file.
       xlab("Interval") +
       ylab("Average Steps")
 
-![](PA1_template_files/figure-markdown_strict/unnamed-chunk-40-1.png)
+![Weekday vs Weekend Plot](https://github.com/sbcybersolutions/RepData_PeerAssessment1/blob/master/Fig4.png)
