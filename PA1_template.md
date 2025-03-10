@@ -69,7 +69,7 @@ file.
       xlab("Total Steps") +
       ylab("Frequency")
 
-![](PA1_template_files/figure-markdown_strict/unnamed-chunk-28-1.png)
+![First Histogram](/RepData_PeerAssessment1/blob/master/Fig1.png)
 
 ### Summarize the statistics of total steps per day
 
